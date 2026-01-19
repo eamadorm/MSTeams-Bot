@@ -9,6 +9,7 @@ from microsoft_agents.hosting.core import (
 )
 from microsoft_agents.hosting.aiohttp import CloudAdapter
 from .start_server import start_server
+from agent.main import agent
 
 AGENT_APP = AgentApplication[TurnState](
     storage=MemoryStorage(), adapter=CloudAdapter()
@@ -27,7 +28,8 @@ AGENT_APP.message("/help")(_help)
 
 @AGENT_APP.activity("message")
 async def on_message(context: TurnContext, _):
-    await context.send_activity(f"you said: {context.activity.text}")
+    agent_response = await agent.run(context.activity.text)
+    await context.send_activity(agent_response.output)
 
 if __name__ == "__main__":
     try:
