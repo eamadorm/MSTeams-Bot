@@ -1,0 +1,17 @@
+[project]
+name = "msteams-bot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+ms-integration = [
+    "microsoft-agents-hosting-aiohttp>=0.6.1",
+]
+local_dev = [
+    "pytest>=8.4.2",
+    "ipykernel>=7.1.0",
+    "requests>=2.32.5",
+]
