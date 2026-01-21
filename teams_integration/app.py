@@ -1,22 +1,32 @@
 # app.py
 
 # Code adapted from: https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/quickstart?tabs=csharp&pivots=python
+# and https://github.com/microsoft/Agents/blob/main/samples/python/quickstart/src/agent.py
 from microsoft_agents.hosting.core import (
-   AgentApplication,
-   TurnState,
-   TurnContext,
-   MemoryStorage,
+    Authorization,
+    AgentApplication,
+    TurnState,
+    TurnContext,
+    MemoryStorage,
 )
-from microsoft_agents.activity import Activity
+from microsoft_agents.authentication.msal import MsalConnectionManager
+from microsoft_agents.activity import Activity, load_configuration_from_env
 from microsoft_agents.hosting.aiohttp import CloudAdapter
 from .start_server import start_server
-# from agent.main import agent
-import json
 import asyncio
 import aiohttp
+import os
+
+agent_sdk_config = load_configuration_from_env(os.environ)
+
+# Make the connection with Microsoft
+STORAGE=MemoryStorage()
+CONNECTION_MANAGER = MsalConnectionManager(**agent_sdk_config)
+ADAPTER = CloudAdapter(connection_manager=CONNECTION_MANAGER)
+AUTHORIZATION=Authorization(STORAGE, CONNECTION_MANAGER, **agent_sdk_config)
 
 AGENT_APP = AgentApplication[TurnState](
-    storage=MemoryStorage(), adapter=CloudAdapter()
+    storage=STORAGE, adapter=ADAPTER, authorization=AUTHORIZATION, **agent_sdk_config
 )
 
 async def _help(context: TurnContext, _: TurnState):
@@ -85,6 +95,6 @@ async def on_message(context: TurnContext, _):
 
 if __name__ == "__main__":
     try:
-        start_server(AGENT_APP, None)
+        start_server(agent_application=AGENT_APP, auth_configuration=CONNECTION_MANAGER.get_default_connection_configuration())
     except Exception as error:
         raise error

@@ -25,12 +25,12 @@ def start_server(
 
    APP = Application(middlewares=[jwt_authorization_middleware])
    APP.router.add_post("/api/messages", entry_point)
-   APP.router.add_get("/api/messages", lambda _: Response(status=200))
+   APP.router.add_get("/api/messages", lambda _: Response(status=200, text="The agent is live!",))
    APP["agent_configuration"] = auth_configuration
    APP["agent_app"] = agent_application
    APP["adapter"] = agent_application.adapter
 
    try:
-      run_app(APP, host="localhost", port=environ.get("PORT", 3978))
+      run_app(APP, host="0.0.0.0", port=int(environ.get("PORT", 3978)))
    except Exception as error:
       raise error
