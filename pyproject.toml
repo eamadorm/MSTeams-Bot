@@ -8,7 +8,24 @@ dependencies = []
 
 [dependency-groups]
 ms-integration = [
+    "cryptography>=46.0.3",
+    "microsoft-agents-authentication-msal>=0.7.0",
     "microsoft-agents-hosting-aiohttp>=0.6.1",
+]
+agent = [
+    "google-cloud-bigquery>=3.31.0",
+    "google-cloud-storage>=3.1.0",
+    "google-cloud-modelarmor>=0.3.0",
+    "fastapi>=0.118.2",
+    "loguru>=0.7.3",
+    "pydantic-ai>=1.31.0",
+    "pydantic>=2.11.9",
+    "pydantic-settings>=2.11.0",
+    "uvicorn>=0.37.0",
+    "datetime>=6.0",
+    "requests>=2.32.5",
+    "beautifulsoup4>=4.12.3",
+    "markdownify>=0.11.6",
 ]
 local_dev = [
     "pytest>=8.4.2",
