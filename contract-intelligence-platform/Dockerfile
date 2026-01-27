@@ -1,14 +1,14 @@
 # --- Etapa 1: Construcción (Build) ---
-FROM node:20-slim AS build
+FROM node:20-alpine AS build
 WORKDIR /app
 
 # Copiamos los archivos de definición de paquetes
 COPY package.json ./
 # Si tienes un package-lock.json, es recomendable descomentar la siguiente línea:
-# COPY package-lock.json ./
+COPY package-lock.json ./
 
 # Instalamos las dependencias
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Copiamos el resto del código fuente
 COPY . .

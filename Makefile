@@ -41,6 +41,8 @@ build-deploy-agent:
 	make push-teams-image
 	make deploy-teams-image
 
+
+########## SENTINEL AI - AUTONOMOUS RISK ASSURANCE ##########
 build-sentinel-image:
 	cd sentinel-ai_-autonomous-risk-assurance && \
 	docker build -t northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/sentinel-ai-autonomous-risk-assurance:1.0.0 .
@@ -60,3 +62,24 @@ build-deploy-sentinel:
 	make build-sentinel-image
 	make push-sentinel-image
 	make deploy-sentinel-image
+
+########## CONTRACT INTELLIGENCE PLATFORM ##########
+build-contract-image:
+	cd contract-intelligence-platform && \
+	docker build -t northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/contract-intelligence-platform:1.0.0 .
+
+push-contract-image:
+	docker push northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/contract-intelligence-platform:1.0.0
+
+deploy-contract-image:
+	gcloud run deploy contract-intelligence-platform \
+	--image=northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/contract-intelligence-platform:1.0.0 \
+	--region=northamerica-south1 \
+	--min-instances=0 \
+	--allow-unauthenticated \
+	--port=80
+
+build-deploy-contract:
+	make build-contract-image
+	make push-contract-image
+	make deploy-contract-image
