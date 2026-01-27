@@ -1,0 +1,5 @@
+{
+  "name": "Contract Intelligence Platform",
+  "description": "A demo application showcasing the transformation of unstructured contracts into structured, queryable, and actionable intelligence using Generative AI. It features a portfolio dashboard, contract deep-dive analysis, and natural language query capabilities.",
+  "requestFramePermissions": []
+}

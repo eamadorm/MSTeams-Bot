@@ -40,3 +40,23 @@ build-deploy-agent:
 	make build-teams-image
 	make push-teams-image
 	make deploy-teams-image
+
+build-sentinel-image:
+	cd sentinel-ai_-autonomous-risk-assurance && \
+	docker build -t northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/sentinel-ai-autonomous-risk-assurance:1.0.0 .
+
+push-sentinel-image:
+	docker push northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/sentinel-ai-autonomous-risk-assurance:1.0.0
+
+deploy-sentinel-image:
+	gcloud run deploy sentinel-ai-autonomous-risk-assurance \
+	--image=northamerica-south1-docker.pkg.dev/p-dev-stemilt-0sjp-1/gcp-demos/sentinel-ai-autonomous-risk-assurance:1.0.0 \
+	--region=northamerica-south1 \
+	--min-instances=0 \
+	--allow-unauthenticated \
+	--port=80
+
+build-deploy-sentinel:
+	make build-sentinel-image
+	make push-sentinel-image
+	make deploy-sentinel-image
